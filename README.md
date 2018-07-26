@@ -1,4 +1,4 @@
-# QT Calculator
+# QT Notepad
 
 ## Tools
 
