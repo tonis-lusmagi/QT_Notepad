@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icons/document-close.svg</file>
+        <file>Icons/document-edit.svg</file>
+        <file>Icons/document-multiple.svg</file>
+        <file>Icons/document-new.svg</file>
+        <file>Icons/document-open.svg</file>
+        <file>Icons/document-print.svg</file>
+        <file>Icons/document-save.svg</file>
+        <file>Icons/edit-cut.svg</file>
+        <file>Icons/edit-paste.svg</file>
+        <file>Icons/edit-redo.svg</file>
+        <file>Icons/edit-undo.svg</file>
+    </qresource>
+</RCC>
