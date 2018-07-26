@@ -56,3 +56,5 @@ FORMS += \
 
 RESOURCES += \
     resources.qrc
+
+QT += svg

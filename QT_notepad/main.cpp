@@ -20,6 +20,7 @@
 
 #include "mainwindow.h"
 #include <QApplication>
+#include <QtSvg>
 
 int main(int argc, char *argv[])
 {
