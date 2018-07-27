@@ -39,8 +39,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0); //declares a constructor, 0 means no parent
-    ~MainWindow(); //destructor, frees resorces
+    explicit MainWindow(QWidget *parent = nullptr); //declares a constructor, 0 means no parent
+    ~MainWindow() override; //destructor, frees resorces
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -74,7 +74,8 @@ private:
     Ui::MainWindow *ui; //points to UI class
     QString currentFile;
     bool exitProcess();
-    bool isWindowModified;
+    bool isWindowModified = true;
+    bool mod = true;
     QString QT_Notepad = ("QT Notepad - ");
 };
 

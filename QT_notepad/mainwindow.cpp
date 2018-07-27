@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->textEdit->document(), &QTextDocument::contentsChanged, this, &MainWindow::documentWasModified);
     QString fileName = ("Untitled");
     currentFile = fileName;
-    documentWasModified();
+    //documentWasModified();
     setWindowTitle(QT_Notepad + fileName + "[*]");
 }
 
@@ -39,7 +39,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionNew_triggered()
 {
-    if (!ui->textEdit->document()->isModified() | (!isWindowModified)) {
+    if (!ui->textEdit->document()->isModified() | ((!mod) & (!isWindowModified))) {
         currentFile.clear();
         ui->textEdit->setText(QString());
         QString fileName = ("Untitled");
@@ -117,8 +117,11 @@ void MainWindow::on_actionSave_As_triggered()
     file.close();
 
     documentWasModified();
+    mod = false;
     isWindowModified = false;
-    setWindowModified(false); //removes *, but remains modified after saving [bug]
+    setWindowModified(false); //removes *, but remains modified after saving and modifying
+                              //setting mod = false and using as control statement with & isWindowModified = false
+                              //to fix the bug.
     setWindowTitle(QT_Notepad + fileName + "[*]");
     }
 }
@@ -139,7 +142,7 @@ void MainWindow::on_actionPrint_triggered()
 
 void MainWindow::on_actionExit_triggered()
 {
-    if (!ui->textEdit->document()->isModified() | (!isWindowModified)) {
+    if (!ui->textEdit->document()->isModified() | ((!mod) & (!isWindowModified))) {
         QApplication::quit();
     } else {
         QMessageBox msgBox(this); //'this' sets QMessageBox parent to QMainWindow (inherits style)
@@ -214,7 +217,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 bool MainWindow::exitProcess()
 {
-    if (!ui->textEdit->document()->isModified() | (!isWindowModified)) {
+    if (!ui->textEdit->document()->isModified() | ((!mod) & (!isWindowModified))) {
         return true;
     } else {
         QMessageBox msgBox(this); //'this' sets QMessageBox parent to QMainWindow (inherits style)
@@ -241,4 +244,5 @@ bool MainWindow::exitProcess()
 void MainWindow::documentWasModified()
 {
     setWindowModified(ui->textEdit->document()->isModified());
+    isWindowModified = true;
 }
