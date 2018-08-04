@@ -11,5 +11,6 @@
         <file>Icons/edit-paste.svg</file>
         <file>Icons/edit-redo.svg</file>
         <file>Icons/edit-undo.svg</file>
+        <file>Icons/qt_logo_black_rgb.svg</file>
     </qresource>
 </RCC>

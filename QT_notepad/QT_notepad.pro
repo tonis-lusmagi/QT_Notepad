@@ -1,5 +1,5 @@
 #
-# QT Notepad program
+# QT Notepad
 # Copyright (C) 2018  Lusberg
 #
 # This file is part of QT Notepad.
@@ -20,13 +20,12 @@
 
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-07-23T18:37:53
+# Project created by QtCreator 2018-08-04T02:52:42
 #
 #-------------------------------------------------
 
-QT       += core gui printsupport
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui widgets
+requires(qtConfig(filedialog))
 
 TARGET = QT_notepad
 TEMPLATE = app
@@ -43,18 +42,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        mdichild.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        mdichild.h
 
 FORMS += \
         mainwindow.ui
 
-RESOURCES += \
-    resources.qrc
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
 
-QT += svg
+RESOURCES += \
+        resources.qrc

@@ -1,4 +1,9 @@
-# QT Notepad
+# QT Notepad version 0.3
+
+## Features
+
+	Tabs
+	Drag-n-Drop
 
 ## Tools
 
@@ -23,14 +28,12 @@ Author: [USBA](https://github.com/USBA)
 
 	GNU LGPL v3
 
-## Screenshot
+## Screenshots
 	
 ![](/qt_notepad_screenshot.png?raw=true)
 
+![](/qt_notepad_screenshot1.png?raw=true)
+
 ## Tutorial
 
-Derek Banas
-
-Qt Tutorial : C++ Notepad App
-
-https://www.youtube.com/watch?v=I96uPDifZ1w
+http://doc.qt.io/qt-5/qtwidgets-mainwindows-mdi-example.html

@@ -1,5 +1,5 @@
 /*
-# QT Notepad program
+# QT Notepad
 # Copyright (C) 2018  Lusberg
 #
 # This file is part of QT Notepad.
@@ -22,61 +22,87 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QFile>
-#include <QFileDialog>
-#include <QTextStream>
-#include <QMessageBox>
-#include <QPrinter>
-#include <QPrintDialog>
-#include <QCloseEvent>
+#include <QMimeData>
 
-namespace Ui {
-class MainWindow;
-}
+class MdiChild;
+class QAction;
+class QMenu;
+class QMdiArea;
+class QMdiSubWindow;
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr); //declares a constructor, 0 means no parent
-    ~MainWindow() override; //destructor, frees resorces
+    MainWindow();
+
+    bool openFile(const QString &fileName);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+
 
 private slots:
-    void on_actionNew_triggered();
+    void newFile();
+    void open();
+    void save();
+    void saveAs();
+    void updateRecentFileActions();
+    void openRecentFile();
 
-    void on_actionOpen_triggered();
-
-    void on_actionSave_As_triggered();
-
-    void on_actionPrint_triggered();
-
-    void on_actionExit_triggered();
-
-    void on_actionCopy_triggered();
-
-    void on_actionPaste_triggered();
-
-    void on_actionCut_triggered();
-
-    void on_actionUndo_triggered();
-
-    void on_actionRedo_triggered();
-
-    void on_actionQT_Notepad_triggered();
-
-    void documentWasModified();
+#ifndef QT_NO_CLIPBOARD
+    void cut();
+    void copy();
+    void paste();
+    void undo();
+    void redo();
+#endif
+    void about();
+    void updateMenus();
+    void updateWindowMenu();
+    MdiChild *createMdiChild();
+    //void switchLayoutDirection();
 
 private:
-    Ui::MainWindow *ui; //points to UI class
-    QString currentFile;
-    bool exitProcess();
-    bool isWindowModified = true;
-    bool mod = true;
-    QString QT_Notepad = ("QT Notepad - ");
+    enum { MaxRecentFiles = 5 };
+
+    void createActions();
+    void createStatusBar();
+    void readSettings();
+    void writeSettings();
+    bool loadFile(const QString &fileName);
+    static bool hasRecentFiles();
+    void prependToRecentFiles(const QString &fileName);
+    void setRecentFilesVisible(bool visible);
+    MdiChild *activeMdiChild() const;
+    QMdiSubWindow *findMdiChild(const QString &fileName) const;
+
+    QMdiArea *mdiArea;
+
+    QMenu *windowMenu;
+    QAction *newAct;
+    QAction *saveAct;
+    QAction *saveAsAct;
+    QAction *recentFileActs[MaxRecentFiles];
+    QAction *recentFileSeparator;
+    QAction *recentFileSubMenuAct;
+#ifndef QT_NO_CLIPBOARD
+    QAction *cutAct;
+    QAction *copyAct;
+    QAction *pasteAct;
+    QAction *undoAct;
+    QAction *redoAct;
+#endif
+    QAction *closeAct;
+    QAction *closeAllAct;
+    QAction *tileAct;
+    QAction *cascadeAct;
+    QAction *nextAct;
+    QAction *previousAct;
+    QAction *windowMenuSeparatorAct;
 };
 
-#endif // MAINWINDOW_H
+#endif

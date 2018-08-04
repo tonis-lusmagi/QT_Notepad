@@ -1,5 +1,5 @@
 /*
-# QT Notepad program
+# QT Notepad
 # Copyright (C) 2018  Lusberg
 #
 # This file is part of QT Notepad.
@@ -18,15 +18,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "mainwindow.h"
 #include <QApplication>
-#include <QtSvg>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv); //creates application object
-    MainWindow w;
-    w.show();
+    QApplication app(argc, argv);
+    QCoreApplication::setApplicationName("QT Notepad");
+    QCoreApplication::setOrganizationName("Lusberg");
+    QCoreApplication::setApplicationVersion(QT_VERSION_STR);
+    QCommandLineParser parser;
+    parser.setApplicationDescription("QT Notepad text editor");
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.addPositionalArgument("file", "The file to open.");
+    parser.process(app);
 
-    return a.exec(); //loops the app
+    MainWindow mainWin;
+    foreach (const QString &fileName, parser.positionalArguments())
+        mainWin.openFile(fileName);
+    mainWin.show();
+    return app.exec();
 }
